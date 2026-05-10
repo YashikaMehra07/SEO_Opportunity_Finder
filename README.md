@@ -1,5 +1,6 @@
 # SEO_Opportunity_Finder
 SEO Opportunity Finder is an AI-powered SEO analysis platform that automates keyword research, predicts keyword priority using Machine Learning, and provides intelligent content and SERP competitor insights to support data-driven content strategy.
+<<<<<<< HEAD
 
 ## Features
 - Keyword Priority Prediction using Machine Learning
@@ -55,3 +56,5 @@ My contributions included:
 - Data cleaning, preprocessing and feature engineering
 - Keyword similarity & recommendation logic
 - Dashboard/backend integration
+=======
+>>>>>>> 7572afc5c7f648b6192cf1919af6a5919dac546f
