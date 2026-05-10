@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Opportunity Finder - Discover High-Value Keywords</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="landing-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <svg class="logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M8 12h8M12 8v8"></path>
+                </svg>
+                <span class="logo-text">SEO Finder</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" style="position: relative; overflow: visible;">
+        <!-- Interactive Canvas Background -->
+        <canvas id="particles-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.8;"></canvas>
+        <div class="hero-content">
+            <h1 class="hero-title">Discover SEO Opportunities<br>That Drive Real Revenue</h1>
+            <p class="hero-subtitle">Find high-intent keywords with low competition. AI-powered analysis with predictive accuracy powered by machine learning.</p>
+            
+            <!-- Main CTA Form -->
+            <form class="hero-form" action="/dashboard" method="POST">
+                <div class="form-group">
+                    <input 
+                        type="text" 
+                        name="keyword" 
+                        placeholder="Enter a keyword to analyze..." 
+                        required
+                        class="form-input"
+                    >
+                    <button type="submit" class="btn btn-primary">Analyze Now</button>
+                </div>
+            </form>
+            
+            <!-- Animated Stats -->
+            <div class="stats-section">
+                <div class="stat-box">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-content">
+                        <div class="stat-number" data-target="500" data-suffix="K">0</div>
+                        <div class="stat-label">Keywords Analyzed</div>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-content">
+                        <div class="stat-number" data-target="150" data-suffix="K">0</div>
+                        <div class="stat-label">Active Users</div>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-content">
+                        <div class="stat-number" data-target="88" data-suffix="%">0</div>
+                        <div class="stat-label">Accuracy Rate</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual" style="perspective: 1000px; display: flex; align-items: center; justify-content: center; width: 100%;">
+            
+            <div class="glass-dashboard">
+                <div class="glass-header">
+                    <div class="glass-dots"><span></span><span></span><span></span></div>
+                    <div class="glass-title">Analysis Preview</div>
+                </div>
+                <div class="glass-body">
+                    <div class="mock-search">
+                        <span class="mock-keyword">"premium seo tools"</span>
+                        <span class="mock-badge high">High Opportunity</span>
+                    </div>
+                    
+                    <div class="mock-metrics">
+                        <div class="mock-metric">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span class="mock-label">Search Volume</span>
+                                <span class="mock-value">12.5K/mo</span>
+                            </div>
+                            <div class="mock-bar-container"><div class="mock-bar bg-accent" style="width: 85%;"></div></div>
+                        </div>
+                        <div class="mock-metric">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span class="mock-label">Keyword Difficulty</span>
+                                <span class="mock-value">Easy (24)</span>
+                            </div>
+                            <div class="mock-bar-container"><div class="mock-bar bg-success" style="width: 24%;"></div></div>
+                        </div>
+                        <div class="mock-metric">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span class="mock-label">Purchase Intent</span>
+                                <span class="mock-value">89%</span>
+                            </div>
+                            <div class="mock-bar-container"><div class="mock-bar bg-primary" style="width: 89%;"></div></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mock-pulse-chart" style="margin-top: 2rem; height: 70px; position: relative; border-radius: 12px; background: rgba(33, 40, 66, 0.03); padding: 10px;">
+                         <svg viewBox="0 0 200 50" style="width: 100%; height: 100%; stroke: var(--color-accent); fill: none; stroke-width: 3; stroke-linecap: round;">
+                             <path d="M0,45 Q15,40 25,25 T50,30 T75,15 T100,20 T125,5 T150,15 T175,10 T200,2" class="mock-path" />
+                         </svg>
+                         <!-- Glowing dot -->
+                         <div class="chart-glow-dot"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Floating data pills around the main dashboard -->
+            <div class="floating-pill pill-1">
+                <div class="pill-icon-wrapper match"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                <span class="pill-text">Perfect Match</span>
+            </div>
+            <div class="floating-pill pill-2">
+                <div class="pill-icon-wrapper trend"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="23 6 13.5 15.5 8.5 10.5 1 17"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg></div>
+                <span class="pill-text">+240% Traffic Trend</span>
+            </div>
+            
+            <style>
+                .glass-dashboard {
+                    background: rgba(255, 255, 255, 0.5);
+                    backdrop-filter: blur(24px);
+                    -webkit-backdrop-filter: blur(24px);
+                    border: 1px solid rgba(255, 255, 255, 0.8);
+                    border-radius: 1.5rem;
+                    padding: 1.75rem;
+                    box-shadow: 0 30px 60px rgba(33, 40, 66, 0.12), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+                    width: 100%;
+                    max-width: 420px;
+                    transform: rotateY(-12deg) rotateX(8deg);
+                    transform-style: preserve-3d;
+                    animation: dashFloat3D 7s ease-in-out infinite;
+                }
+                
+                @keyframes dashFloat3D {
+                    0%, 100% { transform: translateY(0) rotateY(-12deg) rotateX(8deg); box-shadow: 0 30px 60px rgba(33, 40, 66, 0.12); }
+                    50% { transform: translateY(-20px) rotateY(-5deg) rotateX(12deg); box-shadow: 0 40px 70px rgba(33, 40, 66, 0.08); }
+                }
+                
+                .glass-header {
+                    display: flex;
+                    align-items: center;
+                    border-bottom: 2px solid rgba(33, 40, 66, 0.05);
+                    padding-bottom: 1rem;
+                    margin-bottom: 1.5rem;
+                }
+                .glass-dots { display: flex; gap: 8px; }
+                .glass-dots span { width: 12px; height: 12px; border-radius: 50%; box-shadow: inset 0 1px 2px rgba(0,0,0,0.1); }
+                .glass-dots span:nth-child(1) { background: #ef4444; }
+                .glass-dots span:nth-child(2) { background: #f59e0b; }
+                .glass-dots span:nth-child(3) { background: #10b981; }
+                
+                .glass-title {
+                    margin-left: 1.25rem;
+                    font-weight: 700;
+                    color: var(--color-primary);
+                    font-size: 0.95rem;
+                    letter-spacing: 0.5px;
+                }
+                
+                .mock-search {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    background: rgba(255, 255, 255, 0.8);
+                    padding: 1rem 1.25rem;
+                    border-radius: 1rem;
+                    margin-bottom: 1.75rem;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+                    border: 1px solid rgba(255, 255, 255, 0.9);
+                }
+                .mock-keyword { font-weight: 800; color: var(--color-primary); font-size: 1.05rem; }
+                .mock-badge { padding: 0.35rem 0.85rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+                .mock-badge.high { background: rgba(16, 185, 129, 0.15); color: #059669; }
+                
+                .mock-metric { margin-bottom: 1.25rem; }
+                .mock-label { font-size: 0.85rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.6rem; }
+                .mock-value { font-size: 0.85rem; font-weight: 800; color: var(--color-primary); }
+                .mock-bar-container { height: 8px; background: rgba(33, 40, 66, 0.08); border-radius: 4px; overflow: hidden; }
+                .mock-bar { height: 100%; border-radius: 4px; animation: expandBar 1.5s cubic-bezier(0.1, 0.8, 0.2, 1) forwards; transform-origin: left; width: 0; }
+                
+                .bg-accent { background: linear-gradient(90deg, var(--color-accent) 0%, #dab584 100%); }
+                .bg-success { background: linear-gradient(90deg, var(--color-success) 0%, #34d399 100%); }
+                .bg-primary { background: linear-gradient(90deg, var(--color-primary) 0%, #475569 100%); }
+                
+                @keyframes expandBar {
+                    0% { transform: scaleX(0); }
+                    100% { transform: scaleX(1); }
+                }
+                
+                .mock-path {
+                    stroke-dasharray: 400;
+                    stroke-dashoffset: 400;
+                    animation: drawPath 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+                }
+                @keyframes drawPath {
+                    0% { stroke-dashoffset: 400; }
+                    50%, 100% { stroke-dashoffset: 0; }
+                }
+                
+                .chart-glow-dot {
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    width: 12px;
+                    height: 12px;
+                    background: var(--color-accent);
+                    border-radius: 50%;
+                    box-shadow: 0 0 15px var(--color-accent);
+                    opacity: 0;
+                    animation: dotAppear 4s infinite;
+                }
+                @keyframes dotAppear {
+                    0%, 45% { opacity: 0; transform: scale(0.5); }
+                    50%, 90% { opacity: 1; transform: scale(1); }
+                    100% { opacity: 0; transform: scale(0.5); }
+                }
+                
+                .floating-pill {
+                    position: absolute;
+                    background: rgba(255, 255, 255, 0.9);
+                    backdrop-filter: blur(10px);
+                    padding: 0.75rem 1.25rem;
+                    border-radius: 2rem;
+                    box-shadow: 0 15px 35px rgba(33, 40, 66, 0.15);
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                    z-index: 5;
+                    border: 1px solid rgba(255, 255, 255, 1);
+                }
+                .floating-pill .pill-text {
+                    font-weight: 700;
+                    font-size: 0.85rem;
+                    color: var(--color-primary);
+                }
+                .pill-icon-wrapper {
+                    width: 28px;
+                    height: 28px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .pill-icon-wrapper.match { background: #10b981; }
+                .pill-icon-wrapper.trend { background: var(--color-accent); }
+                
+                .pill-1 {
+                    top: 20px;
+                    right: -40px;
+                    animation: floatPill 5s ease-in-out infinite 0.5s;
+                }
+                .pill-2 {
+                    bottom: 40px;
+                    left: -30px;
+                    animation: floatPill 6s ease-in-out infinite 1.5s;
+                }
+                @keyframes floatPill {
+                    0%, 100% { transform: translateY(0); }
+                    50% { transform: translateY(-15px); }
+                }
+            </style>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="features-header">
+            <h2>Enterprise-Grade SEO Analysis</h2>
+            <p class="features-subtitle">Powered by AI and machine learning to deliver real results</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card interactive-card">
+                <div class="feature-icon icon-1">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="19" cy="12" r="1"></circle>
+                        <circle cx="5" cy="12" r="1"></circle>
+                    </svg>
+                </div>
+                <h3>AI-Powered Analysis</h3>
+                <p>Machine learning algorithms analyze millions of SEO signals to identify genuine opportunities.</p>
+                <div class="card-hover-content">
+                    <div class="mini-bar-chart">
+                        <div class="bar" style="height: 40%;"></div>
+                        <div class="bar" style="height: 60%;"></div>
+                        <div class="bar" style="height: 80%;"></div>
+                        <div class="bar" style="height: 50%;"></div>
+                    </div>
+                    <p class="hover-text">Predictive accuracy: 98%</p>
+                </div>
+            </div>
+
+            <div class="feature-card interactive-card">
+                <div class="feature-icon icon-2">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 17"></polyline>
+                        <polyline points="17 6 23 6 23 12"></polyline>
+                    </svg>
+                </div>
+                <h3>Real-Time SERP Data</h3>
+                <p>Live competitive landscape. Track ranking gaps and traffic estimates instantly.</p>
+                <div class="card-hover-content">
+                    <div class="metric-dots">
+                        <div class="dot pulse" style="animation-delay: 0s;"></div>
+                        <div class="dot pulse" style="animation-delay: 0.2s;"></div>
+                        <div class="dot pulse" style="animation-delay: 0.4s;"></div>
+                    </div>
+                    <p class="hover-text">Updated every 5 minutes</p>
+                </div>
+            </div>
+
+            <div class="feature-card interactive-card">
+                <div class="feature-icon icon-3">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+                <h3>Competitor Intelligence</h3>
+                <p>See what competitors rank for. Identify content gaps and opportunities.</p>
+                <div class="card-hover-content">
+                    <div class="competitor-list">
+                        <span class="competitor-badge">Competitor 1</span>
+                        <span class="competitor-badge">Competitor 2</span>
+                        <span class="competitor-badge">Competitor 3</span>
+                    </div>
+                    <p class="hover-text">Track 500+ competitors</p>
+                </div>
+            </div>
+
+            <div class="feature-card interactive-card">
+                <div class="feature-icon icon-4">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2v20m10-10H2"></path>
+                        <circle cx="12" cy="12" r="10"></circle>
+                    </svg>
+                </div>
+                <h3>Multivariate Scoring</h3>
+                <p>Priority ranking combines volume, difficulty, intent, and opportunity scoring.</p>
+                <div class="card-hover-content">
+                    <div class="score-display">
+                        <div class="score-ring">
+                            <span class="score-number">94</span>
+                        </div>
+                    </div>
+                    <p class="hover-text">Actionable insights, not raw data</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>SEO Opportunity Finder</h4>
+                <p>Enterprise SEO analytics powered by machine learning.</p>
+            </div>
+            <div class="footer-section">
+                <h5>Product</h5>
+                <ul>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Sign In</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h5>Company</h5>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SEO Opportunity Finder. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

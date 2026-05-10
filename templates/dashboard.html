@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SEO Opportunity Finder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="dashboard-layout">
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <svg class="logo-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M8 12h8M12 8v8"></path>
+                </svg>
+                <span class="logo-text">SEO Finder</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#overview" class="nav-item active" data-page="overview">
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                </svg>
+                <span>Overview</span>
+            </a>
+            <a href="#keywords" class="nav-item" data-page="keywords">
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+                <span>Keywords</span>
+            </a>
+            <a href="#competitors" class="nav-item" data-page="competitors">
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span>Competitors</span>
+            </a>
+            <a href="#reports" class="nav-item" data-page="reports">
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                </svg>
+                <span>Reports</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="/" class="btn btn-secondary btn-sm">← Back Home</a>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-wrapper">
+        <!-- TOP NAVBAR -->
+        <nav class="topbar">
+            <div class="topbar-left">
+                <h1 class="page-title">{{ data.keyword }}</h1>
+            </div>
+
+            <div class="topbar-center">
+                <div class="search-box">
+                    <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <form action="/dashboard" method="POST" class="search-form">
+                        <input type="text" name="keyword" placeholder="Analyze another keyword..." required class="search-input">
+                        <button type="submit" style="display: none;"></button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+            </div>
+        </nav>
+
+        <!-- CONTENT PAGES -->
+        <section class="content">
+            <!-- OVERVIEW PAGE -->
+            <div id="overview" class="page-content active">
+                <div class="hero-metrics">
+                    <div class="metric-card priority-{{ data.priority.lower() }}">
+                        <div class="metric-label">Priority</div>
+                        <div class="metric-value">{{ data.priority }}</div>
+                        <div class="metric-badge {{ data.priority.lower() }}">PRIORITY</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-label">Confidence</div>
+                        <div class="metric-value">{{ (data.confidence * 100)|int }}%</div>
+                        <div class="metric-footer">Based on ML model</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-label">Search Intent</div>
+                        <div class="metric-value">{{ data.intent }}</div>
+                        <div class="metric-footer">User search behavior</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-label">Content Type</div>
+                        <div class="metric-value">{{ data.serp.content_type }}</div>
+                        <div class="metric-footer">Top ranking format</div>
+                    </div>
+                </div>
+
+                <!-- SERP INSIGHTS GRID -->
+                <div class="serp-insights">
+                    <h2 class="section-title">SERP Insights</h2>
+                    <div class="insights-grid">
+                        <div class="insight-card">
+                            <div class="insight-top">
+                                <span class="insight-label">Avg Keyword Difficulty</span>
+                                <svg class="info-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                </svg>
+                            </div>
+                            <div class="insight-big-number">{{ data.serp.avg_difficulty }}</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: {{ (data.serp.avg_difficulty / 100 * 100)|int }}%"></div>
+                            </div>
+                        </div>
+
+                        <div class="insight-card">
+                            <div class="insight-top">
+                                <span class="insight-label">Avg SERP Competition</span>
+                            </div>
+                            <div class="insight-big-number">{{ data.serp.avg_competition}}</div>
+                            <div class="insight-footer">Competitive level</div>
+                        </div>
+
+                        <div class="insight-card">
+                            <div class="insight-top">
+                                <span class="insight-label">Avg Backlinks</span>
+                            </div>
+                            <div class="insight-big-number">{{ data.serp.avg_backlinks }}</div>
+                            <div class="insight-footer">Linking domains</div>
+                        </div>
+
+                        <div class="insight-card">
+                            <div class="insight-top">
+                                <span class="insight-label">Avg Traffic</span>
+                            </div>
+                            <div class="insight-big-number">{{ data.serp.avg_traffic }}</div>
+                            <div class="insight-footer">Monthly visits</div>
+                        </div>
+
+                        <div class="insight-card">
+                            <div class="insight-top">
+                                <span class="insight-label">Avg Keywords / Site</span>
+                            </div>
+                            <div class="insight-big-number">{{ data.serp.avg_ranking_keywords}}</div>
+                            <div class="insight-footer">Ranking keywords</div>
+                        </div>
+
+                        <div class="insight-card">
+                            <div class="insight-top">
+                                <span class="insight-label">Avg Rank Gap</span>
+                            </div>
+                            <div class="insight-big-number">{{ data.serp.avg_rank_gap }}</div>
+                        </div>
+
+                        <div class="insight-card">
+                            <div class="insight-top">
+                                <span class="insight-label">Avg Referring Domains</span>
+                            </div>
+                            <div class="insight-big-number">{{ data.serp.avg_ref_domains }}</div>
+                        </div>
+
+                        <div class="insight-card">
+                            <div class="insight-top">
+                                <span class="insight-label">Avg Search Volume</span>
+                            </div>
+                            <div class="insight-big-number">{{ data.serp.avg_search_volume }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KEYWORDS PAGE -->
+            <div id="keywords" class="page-content">
+                <h2 class="section-title">Keyword Analysis</h2>
+                <div class="keywords-section">
+                    <div class="keyword-card">
+                        <h3>Primary Keyword</h3>
+                        <p class="keyword-value">{{ data.keyword }}</p>
+                        <div class="keyword-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Priority:</span>
+                                <span class="stat-value">{{ data.priority }}</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Confidence:</span>
+                                <span class="stat-value">{{ (data.confidence * 100)|int }}%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 class="section-title">Similar Opportunities</h2>
+                    <div class="recommendations-grid">
+                        {% for rec in data.recommendations %}
+                        <div class="recommendation-card">
+                            <div class="rec-header">
+                                <h3>{{ rec.keyword }}</h3>
+                                <span class="priority-badge {{ rec.priority.lower() }}">{{ rec.priority }}</span>
+                            </div>
+                            <p class="rec-description">Related keyword opportunity</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- COMPETITORS PAGE -->
+            <div id="competitors" class="page-content">
+                <h2 class="section-title">Top Competitors</h2>
+                <div class="table-responsive">
+                    <table class="competitors-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Company</th>
+                                <th>Backlinks</th>
+                                <th>Traffic</th>
+                                <th>Keywords</th>
+                                <th>Content Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in data.serp.competitors[:10] %}
+                            <tr class="competitor-row">
+                                <td class="rank-cell">
+                                    <span class="rank-badge">{{ loop.index }}</span>
+                                </td>
+                                <td class="company-cell">
+                                    <strong>{{ row.company_name or 'Company' }}</strong>
+                                </td>
+                                <td>
+                                    <span class="number">{{ row.backlinks or 0 }}</span>
+                                </td>
+                                <td>
+                                    <span class="number">{{ row.traffic or 0 }}</span>
+                                </td>
+                                <td>
+                                    <span class="number">{{ row.ranking_keywords or 0 }}</span>
+                                </td>
+                                <td>
+                                    <span class="badge-content">{{ row.content_type or 'Unknown' }}</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- CHARTS SECTION -->
+                <div class="charts-section">
+                    <h2 class="section-title">Competitor Analysis</h2>
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Traffic vs Ranking Keywords</h3>
+                                
+                            </div>
+                            <div class="chart-wrapper">
+                                <canvas id="bubbleChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Content Distribution</h3>
+                            </div>
+                            <div class="chart-wrapper">
+                                <canvas id="contentChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3>Keyword Opportunity</h3>
+                            </div>
+                            <div class="chart-wrapper">
+                                <canvas id="keywordChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REPORTS PAGE -->
+            <div id="reports" class="page-content">
+                <h2 class="section-title">Detailed Report</h2>
+                <div class="report-section">
+                    <div class="report-card">
+                        <h3>Keyword Summary</h3>
+                        <div class="report-content">
+                            <p><strong>Keyword:</strong> {{ data.keyword }}</p>
+                            <p><strong>Priority Level:</strong> {{ data.priority }}</p>
+                            <p><strong>Model Confidence:</strong> {{ (data.confidence * 100)|int }}%</p>
+                            <p><strong>Search Intent:</strong> {{ data.intent }}</p>
+                        </div>
+                    </div>
+
+                    <div class="report-card">
+                        <h3>SERP Metrics</h3>
+                        <div class="report-content">
+                            <p><strong>Avg Difficulty:</strong> {{ data.serp.avg_difficulty }}</p>
+                            <p><strong>Avg Competition:</strong> {{ data.serp.avg_competition }}</p>
+                            <p><strong>Avg Backlinks:</strong> {{ data.serp.avg_backlinks}}</p>
+                            <p><strong>Avg Traffic:</strong> {{ data.serp.avg_traffic }} monthly</p>
+                        </div>
+                    </div>
+
+                    <div class="report-card">
+                        <h3>Content Strategy</h3>
+                        <div class="report-content">
+                            <p><strong>Recommended Content Type:</strong> {{ data.serp.content_type }}</p>
+                            <p><strong>Top Ranking Format:</strong> {{ data.serp.content_type }}</p>
+                            <p>Focus on creating content that aligns with the top-ranking format and includes comprehensive keyword coverage.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        // Pass data to JavaScript
+        const dashboardData = {
+            contentMix: {{ data.serp.content_mix | default({}) | tojson | safe }},
+            competitors: {{ data.serp.competitors | default([])|tojson | safe }},
+            keyword: '{{ data.keyword }}'
+        };
+        initDashboard(dashboardData);
+
+        // PAGE SWITCHING
+        function switchPage(pageName) {
+            const validPages = ['overview', 'keywords', 'competitors', 'reports'];
+            if (!validPages.includes(pageName)) pageName = 'overview';
+
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            const selectedPage = document.getElementById(pageName);
+            if (selectedPage) selectedPage.classList.add('active');
+
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.page === pageName) item.classList.add('active');
+            });
+
+            if (location.hash !== '#' + pageName) {
+                history.replaceState(null, '', '#' + pageName);
+            }
+
+            // Init competitor charts only when that tab first becomes visible
+            if (pageName === 'competitors' && typeof initCompetitorCharts === 'function') {
+                setTimeout(initCompetitorCharts, 50);
+            }
+        }
+
+        // Click handlers
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                switchPage(item.dataset.page);
+            });
+        });
+
+        // Handle back/forward and direct URL with hash
+        window.addEventListener('hashchange', () => {
+            switchPage(location.hash.replace('#', '') || 'overview');
+        });
+
+        // On load, go to hash if present
+        switchPage(location.hash.replace('#', '') || 'overview');
+    </script>
+</body>
+</html>
